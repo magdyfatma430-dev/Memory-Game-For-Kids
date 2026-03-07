@@ -10,8 +10,6 @@ background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
 background-attachment:fixed;
-background-size: cover;
-background-position: center;
 text-align:center;
 
 }
@@ -188,6 +186,7 @@ animation:fall 3s linear forwards;
 100%{transform:translateY(100vh) rotate(720deg)}
 
 }
+
 
 
 
