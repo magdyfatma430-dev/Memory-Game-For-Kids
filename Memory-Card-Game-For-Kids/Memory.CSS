@@ -2,7 +2,15 @@ body{
 
 margin:0;
 font-family:Comic Sans MS, sans-serif;
-background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+
+/* FARM BACKGROUND */
+
+background-image:url("farm.jpg");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+background-attachment:fixed;
+
 text-align:center;
 
 }
@@ -14,6 +22,9 @@ display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
+
+background:rgba(255,255,255,0.6);
+backdrop-filter:blur(3px);
 
 }
 
@@ -176,3 +187,4 @@ animation:fall 3s linear forwards;
 100%{transform:translateY(100vh) rotate(720deg)}
 
 }
+
