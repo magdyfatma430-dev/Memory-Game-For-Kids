@@ -1,7 +1,6 @@
 const levels = {
 
 1:['🍎','🍌','🍊'],
-
 2:['🍎','🍌','🍊','🍇','🍓']
 
 }
@@ -35,7 +34,6 @@ function startLevel(){
 matches = 0
 first = null
 second = null
-
 startTime = Date.now()
 
 document.getElementById("level").innerText="Level "+level
@@ -47,26 +45,42 @@ createBoard()
 function createBoard(){
 
 const board=document.getElementById("board")
-
 board.innerHTML=""
 
 let fruits=levels[level]
-
 let cards=[...fruits,...fruits]
 
 cards.sort(()=>Math.random()-0.5)
 
-board.style.gridTemplateColumns="repeat("+Math.sqrt(cards.length)+",100px)"
+/* GRID FIX */
+
+if(level===1){
+
+board.style.gridTemplateColumns="repeat(3,110px)"
+
+}else{
+
+board.style.gridTemplateColumns="repeat(5,110px)"
+
+}
 
 cards.forEach(fruit=>{
 
 let card=document.createElement("div")
-
 card.classList.add("card")
-
 card.dataset.fruit=fruit
 
-card.innerHTML="❓"
+card.innerHTML=`
+
+<div class="card-inner">
+
+<div class="card-face card-front">❓</div>
+
+<div class="card-face card-back">${fruit}</div>
+
+</div>
+
+`
 
 card.onclick=()=>flip(card)
 
@@ -81,7 +95,6 @@ function flip(card){
 if(lock) return
 if(card===first) return
 
-card.innerHTML=card.dataset.fruit
 card.classList.add("flipped")
 
 if(!first){
@@ -109,9 +122,6 @@ match()
 
 setTimeout(()=>{
 
-first.innerHTML="❓"
-second.innerHTML="❓"
-
 first.classList.remove("flipped")
 second.classList.remove("flipped")
 
@@ -129,6 +139,9 @@ playSound(first.dataset.fruit)
 
 first.classList.add("matched")
 second.classList.add("matched")
+
+starBurst(first)
+starBurst(second)
 
 matches++
 
@@ -161,6 +174,27 @@ finish()
 
 }
 
+function starBurst(card){
+
+for(let i=0;i<5;i++){
+
+let star=document.createElement("div")
+star.className="star"
+star.innerText="⭐"
+
+let rect=card.getBoundingClientRect()
+
+star.style.left=rect.left+40+"px"
+star.style.top=rect.top+"px"
+
+document.body.appendChild(star)
+
+setTimeout(()=>star.remove(),1000)
+
+}
+
+}
+
 function reset(){
 
 first=null
@@ -172,7 +206,6 @@ lock=false
 function finish(){
 
 document.getElementById("game-screen").classList.add("hidden")
-
 document.getElementById("end-screen").classList.remove("hidden")
 
 if(score>best){
@@ -185,10 +218,35 @@ localStorage.setItem("bestScore",score)
 document.getElementById("final-score").innerHTML=
 "⭐ Score: "+score+"<br>🏆 Best: "+best
 
-let speech = new SpeechSynthesisUtterance("Great job! You matched all the fruits!")
-speech.rate = 0.9
-speech.pitch = 1.1
+confettiExplosion()
+
+let speech=new SpeechSynthesisUtterance("Great job! You matched all the fruits!")
+speech.rate=0.9
+speech.pitch=1.1
 speechSynthesis.speak(speech)
+
+}
+
+function confettiExplosion(){
+
+for(let i=0;i<120;i++){
+
+let confetti=document.createElement("div")
+confetti.className="confetti"
+
+confetti.style.left=Math.random()*100+"vw"
+
+confetti.style.background=
+`hsl(${Math.random()*360},100%,50%)`
+
+confetti.style.animationDuration=
+(2+Math.random()*2)+"s"
+
+document.body.appendChild(confetti)
+
+setTimeout(()=>confetti.remove(),3000)
+
+}
 
 }
 
