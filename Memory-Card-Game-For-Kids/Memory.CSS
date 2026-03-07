@@ -3,13 +3,12 @@ body{
 margin:0;
 font-family:Comic Sans MS, sans-serif;
 
-/* FARM BACKGROUND */
-
-background-image:url("Memory-Game-For-Kids/image/farm.jpg");
+background-image:url("./farm.jpg");
 background-size:cover;
 background-position:center;
 background-repeat:no-repeat;
 background-attachment:fixed;
+
 text-align:center;
 
 }
@@ -186,6 +185,7 @@ animation:fall 3s linear forwards;
 100%{transform:translateY(100vh) rotate(720deg)}
 
 }
+
 
 
 
